@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -12,6 +13,16 @@ import java.util.Optional;
 public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query(value = "select * from users where id = :id ", nativeQuery = true)
     Optional<Users> findById(Long id);
+
+    //поиск телеграмм id
+    @Query(value = "select * from users where telegramId = :telegramId ", nativeQuery = true)
+    Optional<Users> findByTelegramId(String telegramId);
+
+
+    @Query(value = "SELECT * FROM users WHERE first_name = :firstName AND last_name = :lastName", nativeQuery = true)
+    Optional<Users> findByNameAndLastName(
+            @Param("firstName") String firstName,  // должно совпадать с :firstName
+            @Param("lastName") String lastName);   // должно совпадать с :lastName
 
     @Modifying
     @Query("UPDATE Users u SET u.booked_meeting_room_id = null, " +

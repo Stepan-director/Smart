@@ -11,7 +11,8 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "telegram_id")
+    private String telegramId;
     private String first_name;
     private String last_name;
     private String patronymic;
@@ -113,5 +114,13 @@ public class Users {
 
     public void setBooked_meeting_room_id(String booked_meeting_room_id) {
         this.booked_meeting_room_id = booked_meeting_room_id;
+    }
+
+    public String getTelegramId() {
+        return telegramId;
+    }
+
+    public void setTelegramId(String telegramId) {
+        this.telegramId = telegramId;
     }
 }

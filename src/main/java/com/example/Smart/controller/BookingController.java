@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/bookings")
@@ -48,16 +49,6 @@ public class BookingController {
             LocalDateTime startDate = LocalDateTime.parse(from);
             LocalDateTime endDate = LocalDateTime.parse(to);
 
-//            Users user = usersServices.findById(userId);
-//            if(user.getBooked_workspace_from() != null && user.getBooked_workspace_to() != null) {
-//                LocalDateTime existingStart = user.getBooked_workspace_from();
-//                LocalDateTime existingEnd = user.getBooked_workspace_to();
-//
-//                if (isOverlapping(existingStart, existingEnd, startDate, endDate)) {
-//                    return "Ошибка: Пользователь уже забронировал место на это время.";
-//
-//                }
-//            }
 
             // бронирование
             workspacesServices.bookWorkspace(seatNumber, userId, startDate, endDate);
@@ -87,10 +78,6 @@ public class BookingController {
         }
     }
 
-//    private boolean isOverlapping(LocalDateTime existingStart, LocalDateTime existingEnd,
-//                                  LocalDateTime newStart, LocalDateTime newEnd) {
-//        return newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
-//    }
 
 
     @PostMapping("/workspaces/extension")
@@ -181,4 +168,12 @@ public class BookingController {
 
     }
 
+    @PostMapping("/telegramId")
+    public void inputTelegramId(String first_name, String last_name, String telegramId) {
+        usersServices.inputTelegramId(first_name, last_name, telegramId);
+    }
+    @PostMapping("/renameTelegramId")
+    public void renameTelegramId(String first_name, String last_name, String telegramId){
+       usersServices.renameTelegramId(first_name, last_name, telegramId);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.Smart.services;
 
 import com.example.Smart.model.Users;
 import com.example.Smart.repository.UsersRepository;
+import jakarta.transaction.Transactional;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersServices {
@@ -98,7 +100,6 @@ public class UsersServices {
     public Users clearUsersBookingRooms(Long userId){
         Users user = usersRepository.findById(userId).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-
         user.setBooked_meeting_room_id(null);
         user.setBooked_meeting_room_to(null);
         user.setBooked_meeting_room_from(null);
@@ -107,6 +108,33 @@ public class UsersServices {
         return usersRepository.save(user);
     }
 
+    // ввод телеграмм
+    public void inputTelegramId(String  first_name, String  last_name, String  telegramId){
+        Optional<Users> telegramById = usersRepository.findByNameAndLastName(first_name, last_name);
 
+        if(telegramById.isEmpty()){
+            throw new IllegalStateException("Пользователь не найден");
+        }
+        Users user = telegramById.get();
+        if(user.getTelegramId() != null && user.getTelegramId().trim().isEmpty()){
+            throw new IllegalStateException("Телеграмм уже записан:" + user.getTelegramId());
+
+        }
+
+
+        user.setTelegramId(telegramId);
+        usersRepository.save(user);
+    }
+
+    @Transactional
+    public void renameTelegramId(String first_name, String last_name, String telegramId){
+        Optional<Users> renameTelegramId = usersRepository.findByNameAndLastName(first_name, last_name);
+        Users user = renameTelegramId.get();
+        if(user.getTelegramId() != null){
+            user.setTelegramId(telegramId);
+        }
+        usersRepository.save(user);
+
+    }
 
 }
