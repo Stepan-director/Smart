@@ -102,10 +102,7 @@ public class BookingController {
 
     }
 
-
-
     //meeting
-    
     @PostMapping("/meeting")
     public String  bookMeetingRooms( @RequestParam String number,
                                      @RequestParam Long userId,

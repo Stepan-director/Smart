@@ -33,8 +33,6 @@ public class UsersServices {
         Users users = usersRepository.findById(userId).orElseThrow(() -> new RuntimeException
                 ("Вы уже бронировали место: " + seatNumber + " отмените, чтобы забронировать снова"));
 
-
-
         users.setBooked_workspace_id(seatNumber);
         users.setBooked_workspace_from(from);
         users.setBooked_workspace_to(to);
@@ -56,28 +54,18 @@ public class UsersServices {
 
         Users users = usersRepository.findById(userId).orElseThrow(() -> new RuntimeException
                 (""));
-
         users.setBooked_workspace_id(seatNumber);
-
         users.setBooked_workspace_to(to);
 
         return usersRepository.save(users);
     }
-
-
-
-
-
-
 
     // продление
     public Users extensionUsersRooms(Long userId, String number, LocalDateTime to){
 
         Users users3 = usersRepository.findById(userId).orElseThrow(() -> new RuntimeException
                 (""));
-
         users3.setBooked_meeting_room_id(number);
-
         users3.setBooked_meeting_room_to(to);
 
         return usersRepository.save(users3);
@@ -121,7 +109,6 @@ public class UsersServices {
 
         }
 
-
         user.setTelegramId(telegramId);
         usersRepository.save(user);
     }
@@ -136,5 +123,4 @@ public class UsersServices {
         usersRepository.save(user);
 
     }
-
 }

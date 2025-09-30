@@ -18,11 +18,8 @@ public class KafkaProducerService {
         return 17;
     }
 
-
-
-
-    public void sendMessage(String message) {
-        message = String.valueOf(getTemp());
+    public void sendMessage() {
+        String message = String.valueOf(getTemp());
         kafkaTemplate.send(TOPIC, message);
         System.out.println("Message sent: " + message);
     }

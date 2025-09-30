@@ -14,8 +14,9 @@ public class KafkaController {
     }
 
     @GetMapping("/send")
-    public String sendMessage(@RequestParam String message) {
-        kafkaProducerService.sendMessage(message);
-        return "Message sent successfully";
+    public String sendMessage() {
+        String message = String.valueOf(kafkaProducerService.getTemp());
+        kafkaProducerService.sendMessage();
+        return "Message sent successfully: " + message;
     }
 }
